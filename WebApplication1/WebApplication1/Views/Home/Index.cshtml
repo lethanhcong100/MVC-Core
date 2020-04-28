@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Danh mục sản phẩm</title>
+    <link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+    <section class="login-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 login-sec">
+                    <h2 class="text-center">Sản phẩm</h2>
+                    @*@Url.Action("Create", "Home")*@
+                    <form action="/Home/Create" method="POST">
+                        @*onsubmit="addItem()">*@
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-uppercase">ID</label>
+                            <input type="text" name="id" id="id" class="form-control" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-uppercase">Tên sản phẩm</label>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-uppercase">Xuất xứ</label>
+                            <input type="text" name="xuatxu" id="xuatxu" class="form-control" width="50" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-uppercase">Loại hàng</label>
+                            <input type="text" name="loaihang" id="loaihang" class="form-control" width="50" placeholder="">
+                        </div>
+                        <input type="text" name="token" value="@ViewBag.Token" />
+                        <input type="submit" value="Save">
+
+                    </form>
+
+                    <p id="counter"></p>
+
+                    <table width="600">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Xuất xứ</th>
+                                <th>Loại hàng</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Xuatxu</td>
+                                        <td>@item.Loaihang</td>
+
+                                        <td><a href="@Url.Action("Delete","Home", new { id = item.Id ,token = ViewBag.Token})" id="buttondelete">Delete</a></td>
+
+                                        <td><a id="Edit" onclick="displayEditForm(@item.Id,'@item.Name','@item.Xuatxu','@item.Loaihang')">Edit</a></td>
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                    <script src="js/site.js" asp-append-version="true"></script>
+
+                    <script type="text/javascript">
+                        function displayEditForm(id, name, xuatxu, loaihang) {
+
+                            document.getElementById('id').value = id;
+                            document.getElementById('name').value = name;
+                            document.getElementById('xuatxu').value = xuatxu;
+                            document.getElementById('loaihang').value = loaihang;
+
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+
